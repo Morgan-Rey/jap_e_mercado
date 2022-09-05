@@ -2,4 +2,4 @@ diario/pensamientos/reflexiones:
     -estaria bueno tener herencia de HTML en el proyecto, sobre todo para no tener que repetir cada cambio que le hago a la navbar en cada archivo, pero voy a suponer que no es posible sin tener backend o algo por el estilo (vengo de django para referencia)
 
 ideas:
-    -reservar espacio para la scrollbar, ahora mismo no recuerdo como se hacia y prefiero priorizar otras cosas más importantes
+    -reservar espacio para la scrollbar, ahora mismo no recuerdo como se hacia y prefiero priorizar otras cosas más importantes [LISTO!]

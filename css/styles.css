@@ -1,3 +1,8 @@
+body {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 .jumbotron,
 .card-body,
 .container,

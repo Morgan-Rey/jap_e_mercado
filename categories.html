@@ -40,25 +40,29 @@
       </div>
     </div>
   </nav>
+  
   <main class="pb-5">
     <div class="text-center p-4">
       <h2>Categorías</h2>
       <p class="lead">Verás aquí todas las categorías del sitio.</p>
     </div>
+
     <div class="container">
-      <div class="row">
+
+      <div class="row"><!-- botones de sort -->
         <div class="col text-end">
           <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
             <input type="radio" class="btn-check" name="options" id="sortAsc">
-            <label class="btn btn-light" for="sortAsc">A-Z</label>
+            <label class="btn btn-light" for="sortAsc" title="Ordenar alfabeticamente">A-Z</label>
             <input type="radio" class="btn-check" name="options" id="sortDesc">
-            <label class="btn btn-light" for="sortDesc">Z-A</label>
+            <label class="btn btn-light" for="sortDesc" title="Ordenar alfabeticamente invertido">Z-A</label>
             <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-            <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1"></i></label>
+            <label class="btn btn-light" for="sortByCount" title="Ordenar por cantidades disponibles"><i class="fas fa-sort-amount-down mr-1"></i></label>
           </div>
         </div>
       </div>
-      <div class="row">
+
+      <div class="row"><!-- filtros -->
         <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
           <div class="row container p-0 m-0">
             <div class="col">
@@ -79,12 +83,14 @@
           </div>
         </div>
       </div>
-      <div class="row">
+
+      <div class="row"><!-- lista de categorias -->
         <div class="list-group" id="cat-list-container">
         </div>
       </div>
     </div>
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
