@@ -56,7 +56,7 @@ function loginCheck() {
     accButton.href = "my-profile.html";
     accButton.innerHTML = username;
 
-    logButton.id = "logoutbtn"
+    logButton.id = "logoutbtn";
     logButton.innerHTML = "Logout";
   }
 }

@@ -1,11 +1,44 @@
 const ORDER_ASC_BY_COST = "+$";
 const ORDER_DESC_BY_COST = "-$";
 const ORDER_BY_PROD_SOLD = "Amount Sold";
-let productsArray = [];
 let currentProductsArray = [];
 let currentSortCriteria = undefined;
 let minCost = undefined;
 let maxCost = undefined;
+
+function showProductsList(array){
+
+    let htmlContentToAppend = "";
+    for(let i = 0; i < array.length; i++){
+        let product = array[i];
+
+        if (((minCost == undefined) || (minCost != undefined && parseInt(product.cost) >= minCost)) &&
+            ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))){
+
+            htmlContentToAppend += `
+            <div onclick="setProdID(${product.id})" class="list-group-item list-group-item-action cursor-active">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="${product.image}" alt="product image" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div class="mb-1">
+                            <h4>${product.name} - ${product.cost} ${product.currency}</h4> 
+                            <p>${product.description}</p> 
+                            </div>
+                            <small class="text-muted">${product.soldCount} artículos vendidos</small> 
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            `
+        }
+
+        document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
+    }
+}
 
 function sortProducts(criteria, array){
     let result = [];
@@ -42,39 +75,32 @@ function sortProducts(criteria, array){
     return result;
 }
 
-function showProductsList(array){
+function sortAndShowProducts(sortCriteria, array){
+    currentSortCriteria = sortCriteria;
 
-    let htmlContentToAppend = "";
-    for(let i = 0; i < array.length; i++){
-        let product = array[i];
-
-        if (((minCost == undefined) || (minCost != undefined && parseInt(product.cost) >= minCost)) &&
-            ((maxCost == undefined) || (maxCost != undefined && parseInt(product.cost) <= maxCost))){
-
-            htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${product.image}" alt="product image" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <div class="mb-1">
-                            <h4>${product.name} - ${product.cost} ${product.currency}</h4> 
-                            <p>${product.description}</p> 
-                            </div>
-                            <small class="text-muted">${product.soldCount} artículos vendidos</small> 
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            `
-        }
-
-        document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
+    if(array != undefined){
+        currentProductsArray = array;
     }
+
+    currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
+
+    showProductsList(currentProductsArray);
 }
+
+// function searchProducts(array){//en desarrollo
+//     let searchValue = document.getElementById("searchBox").value.toLowerCase();
+//     console.log(searchValue);
+
+//     for(let i = 0; i < array.length; i++){
+//         let product = array[i];
+
+//         if((!product.name.includes(searchValue)) || (!product.description.includes(searchValue))){
+//             showProductsList();
+//         }else{
+//             showProductsList();
+//         }
+//     }
+// }
 
 function clearFilter() {
     document.getElementById("rangeFilterCostMin").value = "";
@@ -86,22 +112,15 @@ function clearFilter() {
     showProductsList(currentProductsArray);
 }
 
-function sortAndShowProducts(sortCriteria, productsArray){
-    currentSortCriteria = sortCriteria;
-
-    if(productsArray != undefined){
-        currentProductsArray = productsArray;
-    }
-
-    currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
-
-    showProductsList(currentProductsArray);
+function setProdID(id) {
+    localStorage.setItem("prodID", id);
+    window.location = "product-info.html";
 }
 
 document.addEventListener("DOMContentLoaded", ()=> {
-    let catIdvar = localStorage.getItem("catID");
-    if (!(catIdvar === null)) {
-        getJSONData(PRODUCTS_URL + catIdvar + EXT_TYPE).then(function(resultObj){// modificado para que agarre cualquier categoria
+    let catIdVar = localStorage.getItem("catID");
+    if (!(catIdVar === null)) {
+        getJSONData(PRODUCTS_URL + catIdVar + EXT_TYPE).then(function(resultObj){// modificado para que agarre cualquier categoria
             if (resultObj.status === "ok") {
                 document.getElementById("cat-name").innerHTML = resultObj.data.catName;
                 currentProductsArray = resultObj.data.products;
@@ -126,6 +145,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
         sortAndShowProducts(ORDER_BY_PROD_SOLD);
     });
 
+    //filtros
+
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
         minCost = document.getElementById("rangeFilterCostMin").value;
         maxCost = document.getElementById("rangeFilterCostMax").value;
@@ -135,14 +156,13 @@ document.addEventListener("DOMContentLoaded", ()=> {
         }
         else{
             minCost = undefined;
-        }
+        };
 
         if ((maxCost != undefined) && (maxCost != "") && (parseInt(maxCost)) >= 0){
             maxCost = parseInt(maxCost);
-        }
-        else{
+        }else{
             maxCost = undefined;
-        }
+        };
 
         showProductsList(currentProductsArray);
     });
@@ -150,5 +170,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     document.getElementById("clearRangeFilter").addEventListener("click", function() {
         clearFilter();
     });
-    
+
+    // document.getElementById("searchBox").addEventListener("keyup", ()=>{//en desarrollo
+    //     searchProducts(currentProductsArray);
+    // })
 });

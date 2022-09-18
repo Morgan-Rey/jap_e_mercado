@@ -3,3 +3,5 @@ diario/pensamientos/reflexiones:
 
 ideas:
     -reservar espacio para la scrollbar, ahora mismo no recuerdo como se hacia y prefiero priorizar otras cosas más importantes [LISTO!]
+    -añadir funcionalidad para borrar comentarios hechos por el usuario? o limitar la cantidad a uno por producto pero dejar editarlos. suena complicado actualmente, quizas una vez se guarden de una forma mas permanente
+    -

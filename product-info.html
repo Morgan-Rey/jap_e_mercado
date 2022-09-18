@@ -40,20 +40,41 @@
       </div>
     </div>
   </nav>
+
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="container" id="product-info-container"><!-- product-info.js se encarga de sintetizar esta seccion -->
     </div>
+    <div class="container">
+      <h3>Comentarios</h3>
+      <ul id="product-comments-container" class="list-group"><!-- product-info.js TAMBIEN se encarga de sintetizar esta seccion -->
+      </ul>
+      <br>
+      <h3 style="display: inline-block;">Deja tu comentario! // Puntuación: &nbsp;</h3>
+      <div class="moonScore">
+        <input id="radio1" type="radio" name="moons" value="5"><label for="radio1"><i class="fas fa-moon"></i></label>
+        <input id="radio2" type="radio" name="moons" value="4"><label for="radio2"><i class="fas fa-moon"></i></label>
+        <input id="radio3" type="radio" name="moons" value="3"><label for="radio3"><i class="fas fa-moon"></i></label>
+        <input id="radio4" type="radio" name="moons" value="2"><label for="radio4"><i class="fas fa-moon"></i></label>
+        <input id="radio5" type="radio" name="moons" value="1" checked><label for="radio5"><i class="fas fa-moon"></i></label>
+      </div>
+      <div class="form-floating">
+        <textarea id="commentBox" class="form-control" placeholder="Que opinas sobre este producto?" maxlength="280"
+        style="height: 100px; width: 600px; min-height: 60px; max-height: 150px;"></textarea>
+        <label for="commentBox">Que opinas sobre este producto?</label>
+      </div>      
+      <button id="sendCommentBtn" type="button" disabled class="btn btn-primary" style="margin-top: 8px;">Enviar comentario</button>
+      <span style="position: relative; top: 6px;"> &nbsp;&nbsp;*Funcionalidad en desarollo! No hay envio al servidor</span>
+    </div>
+    <br><br><br><br>
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a> -
-        2022</p>
+        2022 // Instancia realizada por <a href="https://github.com/reyignacio" target="_blank">Ignacio Rey</a></p>
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>

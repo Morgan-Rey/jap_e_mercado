@@ -193,3 +193,34 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.moonScore input { /*basado en un ejemplo visto en clase*/
+  position: absolute;
+  top: -100px;
+  }
+
+.moonScore {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  top: 8px;
+}
+
+.moonScore label {
+  float: right;
+  color: #c1b8b8;
+  font-size: 24px;
+  }
+
+  .moonScore label:hover,
+  .moonScore label:hover ~ label {
+    color: rgb(209, 163, 255);
+    cursor: pointer;
+  }
+  .moonScore input:checked ~ label {
+  color:#8000FF;
+  }
+
+  #logoutbtn{
+    color: red;
+  }
