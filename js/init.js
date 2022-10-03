@@ -44,20 +44,27 @@ let user = sessionStorage.getItem("username");
 
 function loginCheck() {
   let username = sessionStorage.getItem("username");
-  let accButton = document.getElementById("newaccbtn");
   let logButton = document.getElementById("loginbtn");
 
   if(username === null) {
-    alert("Redireccionando a Login")
-    location.href = "login.html"
+    alert("Redireccionando a Login");
+    location.href = "login.html";
   }
   else {
-    accButton.id = "myprofilebtn";
-    accButton.href = "my-profile.html";
-    accButton.innerHTML = username;
-
-    logButton.id = "logoutbtn";
-    logButton.innerHTML = "Logout";
+    logButton.id = "myprofilebtn";
+    logButton.href = "";
+    logButton.innerHTML =`
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        ${username}
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+        <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+        <li><a class="dropdown-item" href="#" id="logoutbtn">Cerrar sesión</a></li>
+      </ul>
+    </div>
+    `
   }
 }
 
@@ -66,7 +73,8 @@ function loginCheck() {
 document.addEventListener("DOMContentLoaded", ()=> {
   loginCheck();
 
-  document.getElementById("logoutbtn").addEventListener("click", ()=> {
-    sessionStorage.removeItem("username"); // cambie de .clear a .removeItem para ser un poco más prolijo
-  })
+   document.getElementById("logoutbtn").addEventListener("click", ()=> {
+     sessionStorage.removeItem("username");
+     location.href = "login.html"
+   })
 })

@@ -38,6 +38,43 @@ function showProductInfo(productInfoData){
     document.getElementById("product-info-container").innerHTML = htmlContentToAppend;
 };
 
+function showRelated(productInfoData){
+    let previousProductID = productInfoData.id - 1;
+    let nextProductID = productInfoData.id + 1;
+    
+    getJSONData(PRODUCT_INFO_URL + previousProductID + EXT_TYPE).then(function(resultObj){
+        if(resultObj.status === "ok"){
+            let previousProduct = resultObj.data;
+            let htmlContentToAppend = `
+            <div onclick="setProdID(${previousProduct.id})" class="img-thumbnail cursor-active" style="width: 310px; display: inline-block;">
+                <h6 style="text-align: center; user-select: none;">${previousProduct.name} // ${previousProduct.currency}${previousProduct.cost}</h6>
+                <img style="width: 300px" src="${previousProduct.images[0]}">
+            </div>
+            `
+            document.getElementById("related-product-container").innerHTML += htmlContentToAppend;
+        }
+    }); 
+
+    getJSONData(PRODUCT_INFO_URL + nextProductID + EXT_TYPE).then(function(resultObj){
+        if(resultObj.status === "ok"){
+            let nextProduct = resultObj.data;
+            let htmlContentToAppend = `
+            <div onclick="setProdID(${nextProduct.id})" class="img-thumbnail cursor-active" style="width: 310px; display: inline-block;">
+            <h6 style="text-align: center; user-select: none;">${nextProduct.name} // ${nextProduct.currency}${nextProduct.cost}</h6>
+                <img style="width: 300px" src="${nextProduct.images[0]}">
+            </div>
+            <hr>
+            `
+            document.getElementById("related-product-container").innerHTML += htmlContentToAppend;
+        }
+    });
+}
+
+function setProdID(id) {// copiada de products.js para que funcione el onclick de los productos relacionados
+    localStorage.setItem("prodID", id);
+    window.location = "product-info.html";
+}
+
 function showComments(productCommentsData){
     let htmlContentToAppend = "";
     for(let i = 0; i < productCommentsData.length; i++){
@@ -122,6 +159,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if(resultObj.status === "ok"){
                 productInfoData = resultObj.data;
                 showProductInfo(productInfoData);
+                showRelated(productInfoData);
             }
         });
 
@@ -147,10 +185,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
         window.location = "categories.html"
     }
 
-    document.getElementById("sendCommentBtn").addEventListener("click", function(){
-        postComment();
-    });
-
     document.getElementById("commentBox").addEventListener("keyup", ()=>{
         if(document.getElementById("commentBox").value === ""){
             document.getElementById("sendCommentBtn").disabled = true;
@@ -158,4 +192,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
             document.getElementById("sendCommentBtn").disabled = false;
         }
     });
+
+    document.getElementById("sendCommentBtn").addEventListener("click", function(){
+        postComment();
+    });
 });
+
+
+// function showRelated(productInfoData){
+//     let previousProductID = productInfoData.id - 1;
+//     let nextProductID = productInfoData.id + 1;
+    
+
+//     getJSONData(PRODUCT_INFO_URL + nextProductID + EXT_TYPE).then(function(resultObj){
+//         if(resultObj.status === "ok"){
+//             let nextProduct = resultObj.data;
+//             let htmlContentToAppend = `
+//             <div class="img-thumbnail" style="width: 310px;">
+//                 <span>${nextProduct.name} // ${nextProduct.currency}${nextProduct.cost}</span><br>
+//                 <img class="img-thumbnail" style="width: 300px" src="${nextProduct.images[0]}">
+//             </div>
+//             <hr>`
+        
+//             document.getElementById("related-product-container").innerHTML = htmlContentToAppend;
+
+//         }
+//     });
+// }
