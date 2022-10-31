@@ -6,6 +6,7 @@ function showProductInfo(productInfoData){
     let htmlContentToAppend = `
     <br>
     <h2>${productInfoData.name}</h2>
+    <button class="btn btn-primary" onclick="addToCart(${productInfoData.id})">Comprar</button>
     <br>
     <hr>
     <h5 class="fw-bold">Precio</h5>
@@ -80,8 +81,9 @@ function showComments(productCommentsData){
     for(let i = 0; i < productCommentsData.length; i++){
         let comment = productCommentsData[i];
         htmlContentToAppend += `
-        <li class="list-group-item"><span class="fw-bold text-wrap" style="color: #8000ff;">${comment.user}</span> - ${comment.dateTime} - ${makeMoons(comment.score)}<br>
-        ${comment.description}
+        <li class="list-group-item">
+        <span class="fw-bold text-wrap" style="color: #8000ff;">${comment.user}</span><span> - ${comment.dateTime} - </span><span>${makeMoons(comment.score)}</span><br>
+        <span class="text-break">${comment.description}</span>
         </li>`
     }
 
@@ -97,15 +99,15 @@ function commentDate(){
     }
     let year = date.getFullYear();
     let hour = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    let itAll = year + "-" + month + "-" + day + " " + hour;
+    let fullDate = year + "-" + month + "-" + day + " " + hour;
 
-    return itAll;
+    return fullDate;
 };
 
-function makeMoons(array){
+function makeMoons(score){
     let moons = "";
     for(let i = 1; i <= 5; i++){
-        if(i <= array){
+        if(i <= score){
             //moons += "&#9899;";
             moons += `<i class="fas fa-moon" style="color: #8000FF;"></i>`
         }else{
@@ -150,6 +152,13 @@ function postComment(){
     showComments(productCommentsData);
     document.getElementById("radio5").checked = "checked";
 };
+
+function addToCart(id) {
+    localStorage.setItem("nuProduct", id);
+    window.location = "cart.html";
+}
+
+// DOMContentLoaded
 
 document.addEventListener("DOMContentLoaded", ()=>{
     localStorage.getItem("allComments");
@@ -197,25 +206,3 @@ document.addEventListener("DOMContentLoaded", ()=>{
         postComment();
     });
 });
-
-
-// function showRelated(productInfoData){
-//     let previousProductID = productInfoData.id - 1;
-//     let nextProductID = productInfoData.id + 1;
-    
-
-//     getJSONData(PRODUCT_INFO_URL + nextProductID + EXT_TYPE).then(function(resultObj){
-//         if(resultObj.status === "ok"){
-//             let nextProduct = resultObj.data;
-//             let htmlContentToAppend = `
-//             <div class="img-thumbnail" style="width: 310px;">
-//                 <span>${nextProduct.name} // ${nextProduct.currency}${nextProduct.cost}</span><br>
-//                 <img class="img-thumbnail" style="width: 300px" src="${nextProduct.images[0]}">
-//             </div>
-//             <hr>`
-        
-//             document.getElementById("related-product-container").innerHTML = htmlContentToAppend;
-
-//         }
-//     });
-// }
