@@ -52,10 +52,32 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="container" style="width: 900px; padding-top: 33px">
+      <h1>Perfil</h1><br>
+      <hr>
+      <form action="#" class="needs-validation" novalidate>
+        <div class="row">
+          <div class="col">
+            <label for="primer-nombre">Primer Nombre*</label>
+            <input type="text" id="primer-nombre" class="form-control" required><br>
+            <label for="primer-apellido">Primer Apellido*</label>
+            <input type="text" id="primer-apellido" class="form-control" required><br>
+            <label for="e-mail">E-mail</label>
+            <input type="text" id="e-mail" class="form-control" disabled>
+          </div>
+          <div class="col">
+            <label for="segundo-nombre">Segundo Nombre</label>
+            <input type="text" id="segundo-nombre" class="form-control"><br>
+            <label for="segundo-apellido">Segundo Apellido</label>
+            <input type="text" id="segundo-apellido" class="form-control"><br>
+            <label for="telefono">Teléfono de Contacto*</label>
+            <input type="text" id="telefono" class="form-control" required>
+          </div>
+        </div>
+        <br><br><br><br><br><br>
+        <hr>
+        <button type="submit" class="btn btn-primary" id="btn-submit">Guardar cambios</button>
+      </form>
     </div>
   </main>
   <footer class="text-muted">

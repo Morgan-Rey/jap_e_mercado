@@ -71,7 +71,7 @@ function showRelated(productInfoData){
     });
 }
 
-function setProdID(id) {// copiada de products.js para que funcione el onclick de los productos relacionados
+function setProdID(id) {
     localStorage.setItem("prodID", id);
     window.location = "product-info.html";
 }
@@ -119,7 +119,6 @@ function makeMoons(score){
 }
 
 function postComment(){
-    //let allComments = productCommentsData; 
     let userComment = document.getElementById("commentBox");
     let userScore = "";
     let myComment = "";
@@ -175,10 +174,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         getJSONData(PRODUCT_INFO_COMMENTS_URL + prodIDVar + EXT_TYPE).then(function(resultObj){
             if(resultObj.status === "ok"){
                 if((localStorage.getItem("allComments") === null) || !(resultObj.data[0].product === JSON.parse(localStorage.getItem("allComments"))[0].product)){
-                    //esta es la manera en la que logre mantener los comentarios del usuario cuando se recarga la pagina. tiene sus limites, pero estoy contento por ahora =(UwU)=
-                    //console.log("localStorage product: " + JSON.parse(localStorage.getItem("allComments"))[0].product); //esta linea rompe el programa si el json es null
                     localStorage.setItem("allComments", JSON.stringify(resultObj.data));
-                    //console.log("resultObj product: " + resultObj.data[0].product);
                     console.log("Comentarios de json y localStorage son de productos diferentes, SE SOBREESCRIBIO el localStorage");
                 }else{
                     console.log("Comentarios de json y localStorage (json + comentarios de usuario) son del mismo producto, NO SE SOBREESCRIBIO el localStorage");
