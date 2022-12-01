@@ -1,6 +1,4 @@
-let cartItems = "";
-let newestProduct = "";
-let deliveryTypes = document.getElementsByName("envio");
+// validacion de bootstrap
 
 (() => {
     'use strict'
@@ -20,6 +18,12 @@ let deliveryTypes = document.getElementsByName("envio");
         }, false)
     })
 })()
+
+// funciones
+
+let cartItems = "";
+let newestProduct = "";
+let deliveryTypes = document.getElementsByName("envio");
 
 function showCartItems(cartItems) {
     let htmlContentToAppend = "";
@@ -47,7 +51,6 @@ function doMath() {
     let currentArticleCount = document.getElementsByClassName("quantity");
     let articleSubtotalInnerHTML = document.getElementsByClassName("itemSubtotal");
     let subtotal = 0;
-    //let allSubtotal = 0;
 
     for (let i = 0; i < articleUnitCost.length; i++) {
         subtotal += parseInt(articleUnitCost[i].innerHTML) * parseInt(currentArticleCount[i].value);
@@ -73,7 +76,7 @@ function doMath() {
     document.getElementById("finalTotal").innerHTML = subtotal + deliveryCost;
 }
 
-function validity(){
+function validity() {
     let boolean = true;
 
     if ((!document.getElementsByName("forma")[0].checked) || (!document.getElementsByName("forma")[1].checked)) {
@@ -111,28 +114,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    // document.getElementById('formMaster').addEventListener('submit', e=>{
-    //     if(!validity() || !this.checkValidity()){
-    //         e.preventDefault();
-    //         e.stopPropagation();
-    //         console.log("test!")
-    //     }
-
-    //     document.body.classList.add('was-validated');
-
-    // });
-
     document.getElementById("btn-submit").addEventListener("click", () => {
         if ((!document.getElementsByName("envio")[0].checked) || (!document.getElementsByName("envio")[1].checked)) {
             document.getElementById("formaWarning").style.display = "inline";
         } else {
             document.getElementById("formaWarning").style.display = "hidden";
         }
-
-        // if (document.getElementById("finalSubtotal").innerHTML === 0){
-        //     preventDefault();
-        //     stopPropagation();
-        // }
     })
 
     document.getElementById("formaCredito").addEventListener("click", () => {

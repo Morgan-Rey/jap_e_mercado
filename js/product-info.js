@@ -2,73 +2,76 @@ let prodIDVar = "";
 let productInfoData = "";
 let productCommentsData = [];
 
-function showProductInfo(productInfoData){
+function showProductInfo(productInfoData) {
     let htmlContentToAppend = `
     <br>
     <h2>${productInfoData.name}</h2>
     <button class="btn btn-primary" onclick="addToCart(${productInfoData.id})">Comprar</button>
     <br>
     <hr>
-    <h5 class="fw-bold">Precio</h5>
-    <span>${productInfoData.currency} ${productInfoData.cost}</span><br><br>
-    <h5 class="fw-bold">Descripción</h5>
-    <span>${productInfoData.description}</span><br><br>
-    <h5 class="fw-bold">Categoría</h5>
-    <span>${productInfoData.category}</span><br><br>
-    <h5 class="fw-bold">Cantidad vendidos</h5>
-    <span>${productInfoData.soldCount}</span><br><br>
-    <h5 class="fw-bold">Imágenes ilustrativas</h5><br>
-    <div class="container text-center">
-        <div class="row">
-            <div class="col">
-                <img class="img-thumbnail" style="width: 300px" src="${productInfoData.images[0]}">
-            </div>
-            <div class="col">
-                <img class="img-thumbnail" style="width: 300px" src="${productInfoData.images[1]}">
-            </div>
-            <div class="col">
-                <img class="img-thumbnail" style="width: 300px" src="${productInfoData.images[2]}">
-            </div>
-            <div class="col">
-                <img class="img-thumbnail" style="width: 300px" src="${productInfoData.images[3]}">
+    <div class="row">
+        <div class="col">
+            <h5 class="fw-bold">Precio</h5>
+            <span>${productInfoData.currency} ${productInfoData.cost}</span><br><br>
+            <h5 class="fw-bold">Descripción</h5>
+            <span>${productInfoData.description}</span><br><br>
+            <h5 class="fw-bold">Categoría</h5>
+            <span>${productInfoData.category}</span><br><br>
+            <h5 class="fw-bold">Cantidad vendidos</h5>
+            <span>${productInfoData.soldCount}</span><br><br>
+        </div>
+        <div class="col">
+            <div id="carousel" class="carousel carousel-dark slide border rounded" data-bs-ride="true">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="${productInfoData.images[0]}" class="d-block w-100" alt="Imagen 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="${productInfoData.images[1]}" class="d-block w-100" alt="Imagen 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="${productInfoData.images[2]}" class="d-block w-100" alt="Imagen 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="${productInfoData.images[3]}" class="d-block w-100" alt="Imagen 4">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
     </div>
-    <hr>`
     
+    <hr>`
+
     document.getElementById("product-info-container").innerHTML = htmlContentToAppend;
 };
 
-function showRelated(productInfoData){
-    let previousProductID = productInfoData.id - 1;
-    let nextProductID = productInfoData.id + 1;
-    
-    getJSONData(PRODUCT_INFO_URL + previousProductID + EXT_TYPE).then(function(resultObj){
-        if(resultObj.status === "ok"){
-            let previousProduct = resultObj.data;
-            let htmlContentToAppend = `
-            <div onclick="setProdID(${previousProduct.id})" class="img-thumbnail cursor-active" style="width: 310px; display: inline-block;">
-                <h6 style="text-align: center; user-select: none;">${previousProduct.name} // ${previousProduct.currency}${previousProduct.cost}</h6>
-                <img style="width: 300px" src="${previousProduct.images[0]}">
-            </div>
-            `
-            document.getElementById("related-product-container").innerHTML += htmlContentToAppend;
-        }
-    }); 
+function showRelated(productInfoData) {
+    let relatedProducts = productInfoData.relatedProducts;
+    let htmlContentToAppend = "";
 
-    getJSONData(PRODUCT_INFO_URL + nextProductID + EXT_TYPE).then(function(resultObj){
-        if(resultObj.status === "ok"){
-            let nextProduct = resultObj.data;
-            let htmlContentToAppend = `
-            <div onclick="setProdID(${nextProduct.id})" class="img-thumbnail cursor-active" style="width: 310px; display: inline-block;">
-            <h6 style="text-align: center; user-select: none;">${nextProduct.name} // ${nextProduct.currency}${nextProduct.cost}</h6>
-                <img style="width: 300px" src="${nextProduct.images[0]}">
-            </div>
-            <hr>
-            `
-            document.getElementById("related-product-container").innerHTML += htmlContentToAppend;
-        }
-    });
+    for (let i = 0; i < relatedProducts.length; i++) {
+        htmlContentToAppend += `
+        <div onclick="setProdID(${relatedProducts[i].id})" class="img-thumbnail cursor-active" style="width: 310px; display: inline-block;">
+            <h6 style="text-align: center; user-select: none;">${relatedProducts[i].name}</h6>
+            <img style="width: 300px" src="${relatedProducts[i].image}">
+        </div>`
+    }
+
+    document.getElementById("related-product-container").innerHTML = htmlContentToAppend;
 }
 
 function setProdID(id) {
@@ -76,9 +79,9 @@ function setProdID(id) {
     window.location = "product-info.html";
 }
 
-function showComments(productCommentsData){
+function showComments(productCommentsData) {
     let htmlContentToAppend = "";
-    for(let i = 0; i < productCommentsData.length; i++){
+    for (let i = 0; i < productCommentsData.length; i++) {
         let comment = productCommentsData[i];
         htmlContentToAppend += `
         <li class="list-group-item">
@@ -90,11 +93,11 @@ function showComments(productCommentsData){
     document.getElementById("product-comments-container").innerHTML = htmlContentToAppend;
 }
 
-function commentDate(){
+function commentDate() {
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
-    if (month < 10){
+    if (month < 10) {
         month = "0" + month;
     }
     let year = date.getFullYear();
@@ -104,13 +107,13 @@ function commentDate(){
     return fullDate;
 };
 
-function makeMoons(score){
+function makeMoons(score) {
     let moons = "";
-    for(let i = 1; i <= 5; i++){
-        if(i <= score){
+    for (let i = 1; i <= 5; i++) {
+        if (i <= score) {
             //moons += "&#9899;";
             moons += `<i class="fas fa-moon" style="color: #8000FF;"></i>`
-        }else{
+        } else {
             //moons += "&#9898;";
             moons += `<i class="far fa-moon" style="color: #222A"></i>`
         }
@@ -118,20 +121,20 @@ function makeMoons(score){
     return moons;
 }
 
-function postComment(){
+function postComment() {
     let userComment = document.getElementById("commentBox");
     let userScore = "";
     let myComment = "";
 
-    if(document.getElementById("radio1").checked){
+    if (document.getElementById("radio1").checked) {
         userScore = document.getElementById("radio1").value;
-    }else if(document.getElementById("radio2").checked){
+    } else if (document.getElementById("radio2").checked) {
         userScore = document.getElementById("radio2").value;
-    }else if(document.getElementById("radio3").checked){
+    } else if (document.getElementById("radio3").checked) {
         userScore = document.getElementById("radio3").value;
-    }else if(document.getElementById("radio4").checked){
+    } else if (document.getElementById("radio4").checked) {
         userScore = document.getElementById("radio4").value;
-    }else if(document.getElementById("radio5").checked){
+    } else if (document.getElementById("radio5").checked) {
         userScore = document.getElementById("radio5").value;
     };
 
@@ -159,24 +162,24 @@ function addToCart(id) {
 
 // DOMContentLoaded
 
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
     localStorage.getItem("allComments");
     prodIDVar = localStorage.getItem("prodID");
-    if(!(prodIDVar === null)){
-        getJSONData(PRODUCT_INFO_URL + prodIDVar + EXT_TYPE).then(function(resultObj){
-            if(resultObj.status === "ok"){
+    if (!(prodIDVar === null)) {
+        getJSONData(PRODUCT_INFO_URL + prodIDVar + EXT_TYPE).then(function (resultObj) {
+            if (resultObj.status === "ok") {
                 productInfoData = resultObj.data;
                 showProductInfo(productInfoData);
                 showRelated(productInfoData);
             }
         });
 
-        getJSONData(PRODUCT_INFO_COMMENTS_URL + prodIDVar + EXT_TYPE).then(function(resultObj){
-            if(resultObj.status === "ok"){
-                if((localStorage.getItem("allComments") === null) || !(resultObj.data[0].product === JSON.parse(localStorage.getItem("allComments"))[0].product)){
+        getJSONData(PRODUCT_INFO_COMMENTS_URL + prodIDVar + EXT_TYPE).then(function (resultObj) {
+            if (resultObj.status === "ok") {
+                if ((localStorage.getItem("allComments") === null) || !(resultObj.data[0].product === JSON.parse(localStorage.getItem("allComments"))[0].product)) {
                     localStorage.setItem("allComments", JSON.stringify(resultObj.data));
                     console.log("Comentarios de json y localStorage son de productos diferentes, SE SOBREESCRIBIO el localStorage");
-                }else{
+                } else {
                     console.log("Comentarios de json y localStorage (json + comentarios de usuario) son del mismo producto, NO SE SOBREESCRIBIO el localStorage");
                     console.log("Los comentarios deberian ser los del json + los del usuario");
                 }
@@ -186,19 +189,19 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
         });
 
-    }else{
+    } else {
         window.location = "categories.html"
     }
 
-    document.getElementById("commentBox").addEventListener("keyup", ()=>{
-        if(document.getElementById("commentBox").value === ""){
+    document.getElementById("commentBox").addEventListener("keyup", () => {
+        if (document.getElementById("commentBox").value === "") {
             document.getElementById("sendCommentBtn").disabled = true;
-        }else{
+        } else {
             document.getElementById("sendCommentBtn").disabled = false;
         }
     });
 
-    document.getElementById("sendCommentBtn").addEventListener("click", function(){
+    document.getElementById("sendCommentBtn").addEventListener("click", function () {
         postComment();
     });
 });

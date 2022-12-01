@@ -5,7 +5,7 @@ function login(){
     if(username === "" || password === ""){
         alert("Ingrese usuario y contraseña!")
     } else {
-        sessionStorage.setItem("username", username); // por ahora solo se guarda el nombre de usuario, lo cambiaré más tarde cuando sea necesario
+        sessionStorage.setItem("username", username);
         location.href = "index.html";
     }
 }

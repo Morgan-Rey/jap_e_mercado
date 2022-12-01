@@ -1,3 +1,5 @@
+// validacion de bootstrap
+
 (() => {
     'use strict'
 
@@ -17,8 +19,9 @@
     })
 })()
 
-let retrievedProfile = "";
+// funciones
 
+let retrievedProfile = "";
 let primerNombre = document.getElementById("primer-nombre");
 let segundoNombre = document.getElementById("segundo-nombre");
 let primerApellido = document.getElementById("primer-apellido");
